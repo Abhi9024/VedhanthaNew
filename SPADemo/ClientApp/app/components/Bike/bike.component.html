@@ -1,0 +1,25 @@
+﻿<!--<div class="row">
+    <div class="col-lg-3">{{bike.Name}}</div>
+    <div class="col-lg-3">{{bike.Company}}</div>
+    <div class="col-lg-3">{{bike.Type}}</div>
+</div>-->
+
+
+
+
+<table class='table'>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Comapny</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let bike of bikes">
+        <tr>
+            <td>{{ bike.name }}</td>
+            <td>{{ bike.type }}</td>
+            <td>{{ bike.company }}</td>
+        </tr>
+    </tbody>
+</table>
