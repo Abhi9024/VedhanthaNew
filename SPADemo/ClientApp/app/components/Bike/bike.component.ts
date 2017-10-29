@@ -1,29 +1,57 @@
-﻿import { Component, Inject } from '@angular/core';
-import { Http} from '@angular/http';
+﻿import { Component, Inject, OnInit } from '@angular/core';
+import { BikeService } from '../../shared/bike.service';
+import { IBike } from '../../shared/Interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'bike',
-    templateUrl : './bike.component.html'
+    templateUrl: './bike.component.html',
+    providers: [BikeService]
 })
 export class BikeComponent {
-    public bikes: IBike[];
+    public bikes: IBike[] = [];
+    bikeForm: FormGroup;
+    bike: IBike = {
+        name: '',
+        company: '',
+        type: ''
+    };
+    public isAddBikeFormHidden: boolean = false;
 
-    constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
+    constructor(private bikeService: BikeService, private formBuilder: FormBuilder) { }
 
-        http.get(baseUrl + 'api/Bike/GetAllBikeInfo').subscribe(result => { this.bikes = result.json() as IBike[] }, error => console.error(error));
+    ngOnInit(): void {
+        this.getAllBikes();
+        this.buildForm();
     }
-}
 
-interface IBike {
-    name: string,
-    company: string,
-    type: string
-}
+    getAllBikes() {
+        this.bikeService.getAllBikes()
+            .subscribe((bikeList: IBike[]) => {
+                this.bikes = bikeList;
+            },
+            (err: any) => console.log(err),
+            () => console.log('getAllBikes() retrieved all bikes'));
+    };
 
-enum IBikeType {
-    Cruser = 1,
-    Sports = 2,
-    Luxury_Cruser = 3,
-    Luxury_Sports = 4,
-    Scooter = 5
+    buildForm() {
+        this.bikeForm = this.formBuilder.group({
+            name: [this.bike.name, Validators.required],
+            company: [this.bike.company, Validators.required],
+            type: [this.bike.type, Validators.required]
+        });
+    };
+
+    submit({ value, valid }: { value: IBike, valid: boolean }) {
+        this.bikeService.addBike(value)
+            .subscribe((bike: IBike) => {
+                this.getAllBikes();
+            },
+            (err) => console.log(err));
+            
+    };
+
+    addbike(): void {
+        this.isAddBikeFormHidden =  this.isAddBikeFormHidden ? false : true;
+    };
 }

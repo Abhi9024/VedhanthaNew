@@ -6,6 +6,8 @@ namespace SPADemo.CoreEntity.Models
 {
     public partial class AngularASPCoreDemoContext : DbContext
     {
+        public virtual DbSet<BankAcessorries> BankAcessorries { get; set; }
+        public virtual DbSet<BankCategory> BankCategory { get; set; }
         public virtual DbSet<Bike> Bike { get; set; }
         public virtual DbSet<BikeType> BikeType { get; set; }
 
@@ -20,6 +22,31 @@ namespace SPADemo.CoreEntity.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BankAcessorries>(entity =>
+            {
+                entity.Property(e => e.ProductDescription).IsUnicode(false);
+
+                entity.Property(e => e.ProductName)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ProductCategoryNavigation)
+                    .WithMany(p => p.BankAcessorries)
+                    .HasForeignKey(d => d.ProductCategory)
+                    .HasConstraintName("FK_BankAcessorries_BankCategory");
+            });
+
+            modelBuilder.Entity<BankCategory>(entity =>
+            {
+                entity.HasKey(e => e.CategoryId);
+
+                entity.Property(e => e.CategoryName)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Bike>(entity =>
             {
                 entity.Property(e => e.Company)

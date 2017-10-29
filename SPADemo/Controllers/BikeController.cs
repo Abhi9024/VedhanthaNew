@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using SPADemo.DataAccess;
+﻿using Microsoft.AspNetCore.Mvc;
 using SPADemo.CoreEntity.Models;
+using SPADemo.DataAccess;
+using SPADemo.ServiceModel;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,7 +19,7 @@ namespace SPADemo.Controllers
         }
         //GET: api/values
        [HttpGet("[action]")]
-        public List<Bike> GetAllBikeInfo()
+        public List<BikeServiceModel> GetAllBikeInfo()
         {
             var test = _bikeRepo.GetAll();
             return test;
@@ -43,8 +41,11 @@ namespace SPADemo.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        [Route("AddBike")]
+        public BikeServiceModel Post([FromBody]BikeServiceModel bike)
         {
+            var result = _bikeRepo.AddBike(bike);
+            return result;
         }
 
         // PUT api/values/5

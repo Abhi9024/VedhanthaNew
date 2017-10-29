@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SPADemo.DataAccess;
+using SPADemo.CoreEntity.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SPADemo
 {
@@ -24,7 +26,9 @@ namespace SPADemo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddDbContext<AngularASPCoreDemoContext>(options=>options.UseSqlServer());
             services.AddTransient<IBikeRepo, BikeRepo>();
+            services.AddTransient<IBankAccessoriesRepo, BankAccessoriesRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

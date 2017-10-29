@@ -22,14 +22,30 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\app\components\bank\bank.component.ts" />
+    <None Remove="ClientApp\app\shared\bank.service.ts" />
+    <None Remove="ClientApp\app\shared\Interface.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SPADemo.CoreEntity\SPADemo.CoreEntity.csproj" />
     <ProjectReference Include="..\SPADemo.DataAccess\SPADemo.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\components\bank\bank.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\shared\bank.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\shared\Interface.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="ClientApp\app\components\Bike\bike.component.ts">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\app\components\bank\NewFolder\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

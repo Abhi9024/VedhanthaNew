@@ -1,12 +1,4 @@
-﻿<!--<div class="row">
-    <div class="col-lg-3">{{bike.Name}}</div>
-    <div class="col-lg-3">{{bike.Company}}</div>
-    <div class="col-lg-3">{{bike.Type}}</div>
-</div>-->
-
-
-
-
+﻿
 <table class='table'>
     <thead>
         <tr>
@@ -23,3 +15,48 @@
         </tr>
     </tbody>
 </table>
+
+<div class="row">
+    <div class="col-sm-3">
+        <input type="button" class="btn btn-link" (click)="addbike()" value="Add Bike" />
+    </div>
+</div>
+
+<form [formGroup]="bikeForm" (ngSubmit)="submit(bikeForm)" *ngIf="isAddBikeFormHidden" class="editForm" novalidate>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-4">
+                <label class="center-block">
+                    Name:
+                </label>
+                <input type="text" class="form-control" formControlName="name">
+                <div class="alert alert-danger" [hidden]="bikeForm.controls.name.untouched || bikeForm.controls.name.valid">Name is required.</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-4">
+                <label class="center-block">
+                    Company:
+                </label>
+                <input type="text" class="form-control" formControlName="company">
+                <div class="alert alert-danger" [hidden]="bikeForm.controls.company.untouched || bikeForm.controls.company.valid">Company is required.</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-4">
+                <label class="center-block">
+                    Type:
+                </label>
+                <input type="text" class="form-control" formControlName="type">
+                <div class="alert alert-danger" [hidden]="bikeForm.controls.type.untouched || bikeForm.controls.type.valid">Type is required.</div>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">
+        Submit
+    </button>
+</form>

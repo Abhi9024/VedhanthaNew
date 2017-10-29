@@ -1,12 +1,11 @@
-﻿using SPADemo.CoreEntity.Models;
-using System;
+﻿using SPADemo.ServiceModel;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SPADemo.DataAccess
 {
     public interface IBikeRepo
     {
-        List<Bike> GetAll();
+        List<BikeServiceModel> GetAll();
+        BikeServiceModel AddBike(BikeServiceModel bike);
     }
 }
